@@ -38,7 +38,9 @@ with open(args.graph) as graph_file:
 
 if args.communities is not None:
     # Add a new internal vertex property to the graph, a vector of communities labels
-    graph.vp.comm = graph.new_vertex_property("object", vals=[set() for _ in range(graph.num_vertices())])
+    graph.vp.comm = graph.new_vp("object", vals=[set() for _ in range(graph.num_vertices())])
+    # Add a new internal graph property to the graph, holding the number of communities
+    graph.gp.num_comm = graph.new_gp("int")
     # Read the communities file and create the community vector
     with open(args.communities) as comm_file:
         if not args.labels:
@@ -46,11 +48,15 @@ if args.communities is not None:
             for community, line in enumerate(dropwhile(lambda l: l.startswith('#'), comm_file)):
                 for node in line.split():
                     graph.vp.comm[graph.vertex(node)].add(community)
+            graph.gp.num_comm = community + 1
         else:
             # When the communities file is structured as <vertex> <label>
+            communities = set()
             for line in dropwhile(lambda l: l.startswith('#'), comm_file):
                 node, label = (int(num) for num in line.split())
                 graph.vp.comm[graph.vertex(node)].add(label)
+                communities.add(label)
+            graph.gp.num_comm = len(communities)
 
 # Optionally delete nodes not belonging to any community
 if args.reduce:
@@ -61,7 +67,9 @@ if args.reduce:
 single_vertices = np.where(graph.get_total_degrees(graph.get_vertices()) == 0)[0]
 graph.remove_vertex(single_vertices, fast=True)
 
+print(f"Graph is directed: {graph.is_directed()}")
 print(f"Found [{graph.num_vertices()}] vertices and [{graph.num_edges()}] edges")
-print(f"Found [{community + 1}] communities!")
+print(f"Found [{graph.gp.num_comm}] communities!")
+print("==== Communities saved in g.vp.comm and their size saved in g.gp.num_comm ====")
 # Save the graph as binary
 graph.save(f"{output_name}.gt")
