@@ -51,12 +51,16 @@ if args.communities is not None:
             graph.gp.num_comm = community + 1
         else:
             # When the communities file is structured as <vertex> <label>
-            communities = set()
+            # Translation dict for normalizing the community index
+            translate = {}
+            num_comm = 0
             for line in dropwhile(lambda l: l.startswith('#'), comm_file):
-                node, label = (int(num) for num in line.split())
-                graph.vp.comm[graph.vertex(node)].add(label)
-                communities.add(label)
-            graph.gp.num_comm = len(communities)
+                node, community = (int(num) for num in line.split())
+                if community not in translate:
+                    translate[community] = num_comm
+                    num_comm += 1
+                graph.vp.comm[graph.vertex(node)].add(translate[community])
+            graph.gp.num_comm = num_comm
 
 # Optionally delete nodes not belonging to any community
 if args.reduce:

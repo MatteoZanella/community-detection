@@ -1,9 +1,10 @@
-import numpy as np
 import random
+import numpy as np
 import graph_tool.all as gt
+import utility
 
 
-def slpa(graph: gt.Graph, iterations=100, threshold=0.1) -> gt.VertexPropertyMap:
+def slpa(graph: gt.Graph, iterations=100, threshold=0.1):
     # Initialization of the memory list for each node O(n)
     memory = {vtx: [vtx] for vtx in graph.get_vertices()}
     # T iterations for filling up nodes memory based on speaking and listening rules
@@ -26,7 +27,7 @@ def slpa(graph: gt.Graph, iterations=100, threshold=0.1) -> gt.VertexPropertyMap
             if max_freq > 0:
                 memory[listener].append(random.choice(max_labels))
     # Post-processing operation to keep in memory only the most used labels, given the parametric threshold
-    communities = graph.new_vp("object")
+    communities = graph.new_vertex_property("object")
     for node in memory:
         memory_freq = {}
         num_labels = len(memory[node])
@@ -34,4 +35,6 @@ def slpa(graph: gt.Graph, iterations=100, threshold=0.1) -> gt.VertexPropertyMap
             memory_freq[label] = memory_freq.get(label, 0) + 1
         communities[graph.vertex(node)] = {label for label in memory_freq if memory_freq[label] / num_labels >= threshold}
     # Return a dictionary where a set of communities labels is associated to each node key
-    return communities
+    # The result is normalized such that community labels belongs to [0, num_comm]
+    num_comm = utility.normalize(communities)
+    return num_comm, communities
