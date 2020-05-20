@@ -20,3 +20,12 @@ def normalize(comm: gt.VertexPropertyMap):
             translated_comm.add(translate[community])
         comm[v] = translated_comm
     return num_comm
+
+
+def array_of_comm(comm: gt.VertexPropertyMap, num_comm: int):
+    # comm should already be normalized
+    vertices = np.array([set() for _ in range(num_comm)])
+    for v in comm.get_graph().get_vertices():
+        for community in comm[v]:
+            vertices[community].add(v)
+    return vertices

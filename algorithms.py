@@ -37,4 +37,4 @@ def slpa(graph: gt.Graph, iterations=100, threshold=0.1):
     # Return a dictionary where a set of communities labels is associated to each node key
     # The result is normalized such that community labels belongs to [0, num_comm]
     num_comm = utility.normalize(communities)
-    return num_comm, communities
+    return communities, num_comm
