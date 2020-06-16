@@ -45,10 +45,33 @@ if args.communities is not None:
     with open(args.communities) as comm_file:
         if not args.labels:
             # When the communities file is structured as <vtx> <vtx> ... <vtx>
+            # Compute internal density of every community and a list of communities
+            communities = []
+            conductances = []
+            v_filter = graph.new_vertex_property("boolean", val=False)
             for community, line in enumerate(dropwhile(lambda l: l.startswith('#'), comm_file)):
-                for node in line.split():
-                    graph.vp.comm[graph.vertex(node)].add(community)
-            graph.gp.num_comm = community + 1
+                communities.append({int(node) for node in line.split()})
+                # Compute total degree
+                total_degree = np.sum(graph.get_total_degrees(list(communities[community])))
+                # Compute internal degree
+                for v in communities[community]:
+                    v_filter[graph.vertex(v)] = True
+                graph.set_vertex_filter(v_filter)
+                internal_degree = np.sum(graph.get_total_degrees(list(communities[community])))
+                for v in communities[community]:
+                    v_filter[graph.vertex(v)] = False
+                graph.clear_filters()
+                # Compute conductance
+                conductances.append(1 - internal_degree / total_degree)
+            # Delete the bottom quartile
+            threshold = np.quantile(np.array(conductances), 0.75)
+            f_communities = [comm for (cnd, comm) in zip(conductances, communities) if cnd < threshold]
+            # Insert the communities to the graph
+            for community, vertices in enumerate(f_communities):
+                for vtx in vertices:
+                    graph.vp.comm[graph.vertex(vtx)].add(community)
+            # Add the number of communities
+            graph.gp.num_comm = len(f_communities)
         else:
             # When the communities file is structured as <vertex> <label>
             # Translation dict for normalizing the community index
@@ -64,7 +87,7 @@ if args.communities is not None:
 
 # Optionally delete nodes not belonging to any community
 if args.reduce:
-    unassigned_vertices = [v for v in graph.vertices() if not graph.vp.comm[v]]
+    unassigned_vertices = [v for v in graph.get_vertices() if not graph.vp.comm[v]]
     graph.remove_vertex(unassigned_vertices, fast=True)
 
 # Cleanup: removing all vertices that aren't connected with any other vertex mainly because of gaps in the vertex count
