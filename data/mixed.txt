@@ -1,0 +1,102 @@
+Name        Info        Algorithm   Threshold   Iter    Omega   NMI     F-score Comm    Omin    Omax    Omean   Cmin    Cmax    Cmean
+amazon      no-filter   SLPA        0.010       100     0.366   0.588   0.887
+amazon      no-filter   SLPA        0.010       100     0.369   0.587   0.885
+amazon      no-filter   SLPA        0.010       100     0.366   0.585   0.884
+amazon      no-filter   SLPA        0.010       100     0.357   0.547   0.626
+amazon      no-filter   SLPA        0.050       100     0.345   0.510   0.406
+amazon      no-filter   SLPA        0.050       500     0.338   0.502   0.248
+amazon      no-filter   SLPA        0.050       1000    0.337   0.504   0.233
+amazon      no-filter   SLPA        0.100       100     0.334   0.498   0.307
+amazon      no-filter   SLPA        0.250       100     0.314   0.480   0.149
+amazon      no-filter   SLPA        0.500       100     0.295   0.449   0.000
+amazon      no-filter   stochastic  0           0       0.138   0.026   0.315
+amazon		filter		SLPA		0.020		100	    0.607	0.681	0.529
+amazon		filter		SLPA		0.020		100	    0.596	0.680	0.513
+amazon		filter		SLPA		0.020		100	    0.588	0.682	0.508
+amazon		filter		SLPA		0.020		100	    0.598	0.676	0.500
+amazon		filter		SLPA		0.020		100	    0.599	0.678	0.526
+amazon		filter		SLPA		0.020		100	    0.593	0.681	0.520
+amazon		filter		SLPA		0.020		100	    0.599	0.677	0.505
+amazon		filter		SLPA		0.020		100	    0.600	0.683	0.550
+amazon		filter		SLPA		0.020		100	    0.600	0.683	0.527
+amazon		filter		SLPA		0.020		100	    0.595	0.679	0.519
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.565	0.172
+youtube		filter-w2	SLPA		0.063		100	    0.003	0.560	0.176
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.558	0.180
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.561	0.172
+youtube		filter-w2	SLPA		0.063		100	    0.003	0.568	0.176
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.567	0.178
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.556	0.184
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.562	0.185
+youtube		filter-w2	SLPA		0.063		100	    0.004	0.558	0.172
+youtube		filter-w2	SLPA		0.063		100	    0.003	0.580	0.167
+dblp		filter		SLPA		0.083		100	    0.841	0.826	0.076
+dblp		filter		SLPA		0.083		100	    0.844	0.830	0.077
+dblp		filter		SLPA		0.083		100	    0.836	0.819	0.078
+amazon		filter		SLPA		0.010		100		0.599	0.699	0.615	2607	1	7	1.849
+amazon		filter		SLPA		0.011		100		0.600	0.700	0.615	2553	1	7	1.846
+amazon		filter		SLPA		0.012		100		0.597	0.698	0.604	2581	1	8	1.839
+amazon		filter		SLPA		0.013		100		0.596	0.694	0.598	2548	1	8	1.808
+amazon		filter		SLPA		0.014		100		0.591	0.692	0.596	2554	1	7	1.800
+amazon		filter		SLPA		0.015		100		0.595	0.697	0.608	2591	1	8	1.835
+amazon		filter		SLPA		0.016		100		0.599	0.701	0.613	2613	1	7	1.861
+amazon		filter		SLPA		0.017		100		0.598	0.697	0.615	2576	1	6	1.829
+amazon		filter		SLPA		0.018		100		0.605	0.698	0.614	2581	1	7	1.836
+amazon		filter		SLPA		0.019		100		0.604	0.698	0.617	2582	1	8	1.839
+amazon		filter		SLPA		0.020		100		0.602	0.683	0.539	2165	1	7	1.640
+youtube		filter-w2	SLPA		0.010		100		0.002	0.470	0.200	7886	1	12	3.024
+youtube		filter-w2	SLPA		0.015		100		0.003	0.465	0.212	7881	1	13	3.090
+youtube		filter-w2	SLPA		0.020		100		0.003	0.489	0.194	7398	1	14	2.752
+youtube		filter-w2	SLPA		0.026		100		0.003	0.503	0.184	7295	1	10	2.645
+youtube		filter-w2	SLPA		0.031		100		0.003	0.522	0.181	6912	1	11	2.482
+youtube		filter-w2	SLPA		0.036		100		0.003	0.506	0.195	6940	1	12	2.585
+youtube		filter-w2	SLPA		0.042		100		0.003	0.540	0.181	6493	1	9	2.317
+youtube		filter-w2	SLPA		0.047		100		0.004	0.531	0.180	6434	1	9	2.353
+youtube		filter-w2	SLPA		0.052		100		0.004	0.537	0.184	6257	1	9	2.275
+youtube		filter-w2	SLPA		0.057		100		0.003	0.548	0.172	6182	1	9	2.215
+youtube		filter-w2	SLPA		0.062		100		0.003	0.563	0.170	5887	1	9	2.127
+dblp		filter  	SLPA		0.010		100		0.761	0.657	0.098	8723	1	12	1.711
+dblp		filter		SLPA		0.017		100		0.765	0.658	0.107	8630	1	13	1.704
+dblp		filter		SLPA		0.025		100		0.791	0.704	0.098	7200	1	9	1.521
+dblp		filter		SLPA		0.032		100		0.810	0.744	0.089	6394	1	8	1.405
+dblp		filter		SLPA		0.039		100		0.813	0.746	0.099	6334	1	9	1.406
+dblp		filter		SLPA		0.047		100		0.814	0.764	0.096	5884	1	9	1.349
+dblp		filter		SLPA		0.054		100		0.824	0.784	0.083	5489	1	7	1.306
+dblp		filter		SLPA		0.061		100		0.830	0.800	0.089	5158	1	7	1.266
+dblp		filter		SLPA		0.069		100		0.834	0.801	0.075	5192	1	6	1.264
+dblp		filter		SLPA		0.076		100		0.841	0.816	0.092	4968	1	6	1.233
+dblp		filter		SLPA		0.083		100		0.842	0.830	0.087	4760	1	6	1.209
+amazon		filter		SLPA		0.010		1000	0.600	0.662	0.371	1651	1	7	1.393
+amazon		filter		SLPA		0.011		1000	0.599	0.662	0.336	1618	1	7	1.375
+amazon		filter		SLPA		0.012		1000	0.599	0.662	0.340	1618	1	7	1.377
+amazon		filter		SLPA		0.013		1000	0.603	0.658	0.321	1581	1	6	1.341
+amazon		filter		SLPA		0.014		1000	0.601	0.658	0.332	1575	1	6	1.346
+amazon		filter		SLPA		0.015		1000	0.598	0.656	0.314	1560	1	7	1.326
+amazon		filter		SLPA		0.016		1000	0.597	0.657	0.321	1542	1	5	1.334
+amazon		filter		SLPA		0.017		1000	0.595	0.655	0.311	1537	1	6	1.317
+amazon		filter		SLPA		0.018		1000	0.599	0.656	0.296	1514	1	6	1.316
+amazon		filter		SLPA		0.019		1000	0.601	0.656	0.320	1538	1	5	1.322
+amazon		filter		SLPA		0.020		1000	0.598	0.652	0.281	1482	1	6	1.290
+lj		    filter		SLPA		0.010		100		0.728	0.785	0.072	5173	1	14	1.192
+lj		    filter		SLPA		0.015		100		0.731	0.785	0.061	5144	1	15	1.188
+lj  		filter		SLPA		0.020		100		0.732	0.776	0.050	4498	1	10	1.143
+lj	    	filter		SLPA		0.026		100		0.731	0.778	0.053	4512	1	11	1.146
+lj		    filter		SLPA		0.031		100		0.733	0.771	0.041	4163	1	9	1.121
+lj  		filter		SLPA		0.036		100		0.730	0.768	0.042	4146	1	9	1.120
+lj	    	filter		SLPA		0.042		100		0.736	0.768	0.037	3896	1	7	1.103
+lj		    filter		SLPA		0.047		100		0.729	0.765	0.033	3907	1	7	1.102
+lj	    	filter		SLPA		0.052		100		0.736	0.766	0.037	3763	1	8	1.097
+lj		    filter		SLPA		0.057		100		0.735	0.764	0.033	3744	1	8	1.093
+lj		    filter		SLPA		0.062		100		0.729	0.759	0.029	3626	1	7	1.087
+amazon		filter-S	SLPA		0.010		100		0.161	0.536	0.355	5978	1	14	2.038	1	74	    5.698
+amazon		filter-S	SLPA		0.013		100		0.163	0.545	0.367	5937	1	13	2.015	1	67	    5.672
+amazon		filter-S	SLPA		0.017		100		0.160	0.544	0.374	5963	1	13	2.016	1	79	    5.651
+amazon		filter-S	SLPA		0.020		100		0.166	0.626	0.326	4707	1	11	1.705	1	74	    6.055
+youtube		filter-S	SLPA		0.010		100		0.044	0.176	0.317	13839	1	17	2.605	1	17587	7.499
+youtube		filter-S	SLPA		0.013		100		0.019	0.216	0.277	13387	1	14	2.349	1	26896	6.992
+youtube		filter-S	SLPA		0.015		100		0.046	0.169	0.343	14145	1	16	2.735	1	12024	7.703
+youtube		filter-S	SLPA		0.018		100		0.044	0.185	0.288	13599	1	14	2.453	1	16900	7.188
+youtube		filter-no2	SLPA		0.010		100		0.002	0.398	0.214	6349	1	14	2.887	1	7318	5.630
+youtube		filter-no2	SLPA		0.030		100		0.003	0.441	0.181	5157	1	11	2.415	1	6863	5.798
+youtube		filter-no2	SLPA		0.051		100		0.003	0.478	0.164	4251	1	8	2.051	1	6689	5.974
+youtube		filter-no2	SLPA		0.071		100		0.003	0.510	0.155	3674	1	7	1.847	1	6440	6.225
