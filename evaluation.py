@@ -6,7 +6,7 @@ import utility
 
 
 def _h(w, n):
-    p = float(w) / n
+    p = w / n
     return -p * math.log2(p) if p > 0 else 0
 
 
@@ -20,7 +20,7 @@ def _cover_entropy(cover: np.ndarray, num_vertices: int):
     return h_cover_i, h_cover
 
 
-def NMI_max(c1: gt.VertexPropertyMap, num_comm_c1, c2: gt.VertexPropertyMap, num_comm_c2):
+def nmi_max(c1: gt.VertexPropertyMap, num_comm_c1, c2: gt.VertexPropertyMap, num_comm_c2):
     num_vtx = c1.get_graph().num_vertices()
     x = utility.array_of_comm(c1, num_comm_c1)
     y = utility.array_of_comm(c2, num_comm_c2)
@@ -82,6 +82,26 @@ def omega(c1: gt.VertexPropertyMap, c2: gt.VertexPropertyMap):
     omega_e /= num_pairs ** 2
     # Returning Omega index
     return (omega_u - omega_e) / (1 - omega_e) if omega_e != 1 else 1.0
+
+
+def f_score(ground_truth_c: gt.VertexPropertyMap, computed_c: gt.VertexPropertyMap):
+    graph = ground_truth_c.get_graph()
+    true_overlap = 0
+    false_overlap = 0
+    false_single = 0
+    for v in graph.get_vertices():
+        if len(ground_truth_c[v]) > 1:
+            if len(computed_c[v]) > 1:
+                true_overlap += 1
+            else:
+                false_single += 1
+        elif len(computed_c[v]) > 1:
+            false_overlap += 1
+    if true_overlap == 0:
+        return 0
+    precision = true_overlap / (true_overlap + false_overlap)
+    recall = true_overlap / (true_overlap + false_single)
+    return 2 * precision * recall / (precision + recall)
 
 
 def omega_wrong(c1: gt.VertexPropertyMap, c2: gt.VertexPropertyMap):
