@@ -26,11 +26,23 @@ graph = gt.Graph(directed=args.directed)
 basename = os.path.basename(args.graph)
 output_name = basename[:basename.find(".")]
 
+# Whitelist to filter out useless nodes
+if args.communities is not None:
+    with open(args.communities) as comm_file:
+        if not args.labels:
+            whitelist = set()
+            for line in dropwhile(lambda l: l.startswith('#'), comm_file):
+                for vertex in line.split():
+                    whitelist.add(int(vertex))
+
 # Read the graph text file and build the corresponding graph
 with open(args.graph) as graph_file:
     edges_list = []
     for line in dropwhile(lambda l: l.startswith('#'), graph_file):
-        edges_list.append((int(num) for num in line.split()))
+        edge = tuple([int(num) for num in line.split()])
+        if edge[0] in whitelist and edge[1] in whitelist:
+            edges_list.append(edge)
+        # edges_list.append((int(num) for num in line.split()))
         if len(edges_list) >= MAX_EDGES_LIST_LEN:
             graph.add_edge_list(edges_list)
             edges_list.clear()
@@ -47,12 +59,10 @@ if args.communities is not None:
             # When the communities file is structured as <vtx> <vtx> ... <vtx>
             # Compute internal density of every community and a list of communities
             communities = []
-            conductances = []
+            internal_density = []
             v_filter = graph.new_vertex_property("boolean", val=False)
             for community, line in enumerate(dropwhile(lambda l: l.startswith('#'), comm_file)):
                 communities.append({int(node) for node in line.split()})
-                # Compute total degree
-                total_degree = np.sum(graph.get_total_degrees(list(communities[community])))
                 # Compute internal degree
                 for v in communities[community]:
                     v_filter[graph.vertex(v)] = True
@@ -61,11 +71,13 @@ if args.communities is not None:
                 for v in communities[community]:
                     v_filter[graph.vertex(v)] = False
                 graph.clear_filters()
-                # Compute conductance
-                conductances.append(1 - internal_degree / total_degree)
+                # Compute internal density
+                n_vertices = len(communities[community])
+                density = internal_degree / (n_vertices * (n_vertices - 1))
+                internal_density.append(density)
             # Delete the bottom quartile
-            threshold = np.quantile(np.array(conductances), 0.75)
-            f_communities = [comm for (cnd, comm) in zip(conductances, communities) if cnd < threshold]
+            threshold = np.quantile(np.array(internal_density), 0.25, interpolation='midpoint')
+            f_communities = [comm for (density, comm) in zip(internal_density, communities) if density > threshold]
             # Insert the communities to the graph
             for community, vertices in enumerate(f_communities):
                 for vtx in vertices:
