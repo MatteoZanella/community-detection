@@ -38,3 +38,13 @@ def slpa(graph: gt.Graph, iterations=100, threshold=0.1):
     # The result is normalized such that community labels belongs to [0, num_comm]
     num_comm = utility.normalize(communities)
     return communities, num_comm
+
+
+def statistical_inference(graph: gt.Graph):
+    state = gt.minimize_blockmodel_dl(graph)
+    blocks = state.get_blocks()
+    communities = graph.new_vp("object")
+    for v in graph.get_vertices():
+        communities[v] = {blocks[v]}
+    num_comm = utility.normalize(communities)
+    return communities, num_comm
