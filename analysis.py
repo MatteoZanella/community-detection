@@ -5,6 +5,7 @@ import graph_tool.all as gt
 
 def comm_membership(c: gt.VertexPropertyMap):
     graph = c.get_graph()
+    o_n = 0 # number of nodes with more than 1 community
     o_min = math.inf
     o_max = 0
     o_mean = 0
@@ -12,7 +13,9 @@ def comm_membership(c: gt.VertexPropertyMap):
         o_mean += len(c[v]) / graph.num_vertices()
         o_min = o_min if o_min < len(c[v]) else len(c[v])
         o_max = o_max if o_max > len(c[v]) else len(c[v])
-    return o_min, o_max, o_mean
+        if len(c[v]) > 1:
+            o_n += 1
+    return o_min, o_max, o_mean, o_n
 
 def comm_size(c: gt.VertexPropertyMap, num_comm: int):
     graph = c.get_graph()
